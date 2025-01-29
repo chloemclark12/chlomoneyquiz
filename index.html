@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'PT Serif', serif;
+      text-align: center;
+      background-color: #f9f9f9;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #333;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 1em;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #ff1493;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Quiz Hub!</h1>
+  <p>Select a quiz to begin:</p>
+  <div class="button-container">
+    <button onclick="location.href='blindsongranking.html'">Blind Song Ranking</button>
+    <button onclick="location.href='quiz2.html'">Quiz 2: Science & Nature</button>
+    <button onclick="location.href='quiz3.html'">Quiz 3: History</button>
+  </div>
+  
+  <script>
+    // Optionally, add more interactivity here in the future!
+  </script>
+</body>
+</html>

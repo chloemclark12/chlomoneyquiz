@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blind Song Ranking</title>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'PT Serif', serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      font-size: 2.5em;
+    }
+    .song-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ff1493;
+    }
+    .ranking-list {
+      margin-top: 20px;
+      text-align: left;
+      max-width: 300px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+    }
+    .ranking-list span {
+      display: block;
+      padding: 5px 0;
+    }
+    #backButton {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #ddd;
+      color: black;
+      font-size: 1em;
+      padding: 10px 15px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+    #backButton:hover {
+      background-color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Back Button -->
+  <button id="backButton" onclick="window.location.href='index.html';">Back</button>
+
+  <h1>Welcome to Blind Song Ranking!</h1>
+  <p>Please rank the following songs one by one. After each selection, the current ranking will be displayed.</p>
+
+  <div id="songContainer" class="song-container"></div>
+  <button id="nextButton" onclick="submitRanking()" style="display: none;">Next</button>
+
+  <div class="ranking-list" id="rankingList"></div>
+
+  <script>
+    // Songs bank
+    const optionsBank = [
+      "Tornado Warnings by Sabrina Carpenter", "It's ok I'm ok by Tate McRae",
+      "greedy by Tate McRae", "bloodline by Ariana Grande", "Espresso by Sabrina Carpenter",
+      "everytime by Ariana Grande", "That's So True by Gracie Abrams", 
+      "I Love You, I'm Sorry by Gracie Abrams", "ceilings by Lizzy McAlpine", 
+      "Taste by Sabrina Carpenter", "run for the hills by Tate McRae", 
+      "Sweet Relief by Madison Beer", "traitor by Olivia Rodrigo", 
+      "vampire by Olivia Rodrigo", "Make You Mine by Madison Beer", "yes, and? by Ariana Grande",
+      "Kill Bill by SZA", "Sports car by Tate McRae", "Into You by Ariana Grande",
+      "BIRDS OF A FEATHER by Billie Eilish", "Save Your Tears by The Weeknd", 
+      "deja vu by Olivia Rodrigo", "Saturn by SZA"
+    ];
+
+    // Shuffle and select 10 songs
+    const selectedOptions = optionsBank.sort(() => Math.random() - 0.5).slice(0, 10);
+    let currentSongIndex = 0;
+    const rankings = Array(10).fill('');
+
+    const songContainer = document.getElementById("songContainer");
+    const rankingList = document.getElementById("rankingList");
+    const nextButton = document.getElementById("nextButton");
+
+    function displaySong() {
+      songContainer.innerHTML = `
+        <h2>Rank for: ${selectedOptions[currentSongIndex]}</h2>
+        <label>Please choose a rank (1 to 10):</label>
+        <select id="rankSelect">
+          ${Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+        </select>
+      `;
+      nextButton.style.display = "block";
+    }
+
+    function submitRanking() {
+      const rankValue = parseInt(document.getElementById("rankSelect").value);
+      if (!rankings[rankValue - 1]) {
+        rankings[rankValue - 1] = selectedOptions[currentSongIndex];
+        currentSongIndex++;
+        updateRankingList();
+
+        if (currentSongIndex < selectedOptions.length) {
+          displaySong();
+        } else {
+          songContainer.innerHTML = `<h2>All songs ranked! Thank you!</h2>`;
+          nextButton.style.display = "none";
+        }
+      } else {
+        alert("This rank is already taken. Please choose a different rank.");
+      }
+    }
+
+    function updateRankingList() {
+      rankingList.innerHTML = rankings
+        .map((song, index) => `<span>${index + 1}. ${song || ""}</span>`) 
+        .join("");
+    }
+
+    // Start by displaying the first song
+    displaySong();
+  </script>
+</body>
+</html>
+
